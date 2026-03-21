@@ -12,15 +12,11 @@ namespace Ratatouille
         private IWpfTextView m_textView;
 
         public bool IsFakeTypingActive { get; set; } = false;
+        public bool IsPaused { get; set; } = false;
 
         private string _textToType = "";
         private int _currentPosition = 0;
 
-        // BUG FIX #5: Folosim o proprietate cu setter explicit astfel încât
-        // _currentPosition să se reseteze automat când se setează un text nou.
-        // Înainte, dacă utilizatorul genera cod a doua oară fără să tasteze tot
-        // primul răspuns, _currentPosition rămânea la o valoare din mijloc și
-        // fake typing-ul sărea direct în text sau nu funcționa deloc.
         public string TextToType
         {
             get => _textToType;
@@ -44,7 +40,7 @@ namespace Ratatouille
 
         public int Exec(ref Guid pguidCmdGroup, uint nCmdID, uint nCmdexecopt, IntPtr pvaIn, IntPtr pvaOut)
         {
-            if (IsFakeTypingActive && pguidCmdGroup == VSConstants.VSStd2K)
+            if (IsFakeTypingActive && !IsPaused && pguidCmdGroup == VSConstants.VSStd2K)
             {
                 if (nCmdID == (uint)VSConstants.VSStd2KCmdID.TYPECHAR)
                 {
@@ -56,12 +52,12 @@ namespace Ratatouille
 
                         if (_currentPosition >= _textToType.Length)
                         {
-                            StopFakeTyping();
+                            ScheduleFinishAsync();
                         }
-
-                        // Înghite tasta reală apăsată de utilizator
-                        return VSConstants.S_OK;
                     }
+
+                    // Swallow the key during both typing and cooldown
+                    return VSConstants.S_OK;
                 }
                 else if (nCmdID == (uint)VSConstants.VSStd2KCmdID.CANCEL)
                 {
@@ -72,10 +68,38 @@ namespace Ratatouille
             return m_nextCommandHandler.Exec(ref pguidCmdGroup, nCmdID, nCmdexecopt, pvaIn, pvaOut);
         }
 
+        public void FinishInstantly()
+        {
+            if (!IsFakeTypingActive) return;
+            if (_currentPosition < _textToType.Length)
+            {
+                string remaining = _textToType.Substring(_currentPosition);
+                m_textView.TextBuffer.Insert(m_textView.Caret.Position.BufferPosition, remaining);
+            }
+            StopFakeTyping();
+        }
+
+        public void Pause()
+        {
+            IsPaused = true;
+        }
+
+        public void Resume()
+        {
+            IsPaused = false;
+        }
+
         public void StopFakeTyping()
         {
             IsFakeTypingActive = false;
+            IsPaused = false;
             _currentPosition = 0;
+        }
+
+        private async void ScheduleFinishAsync()
+        {
+            await System.Threading.Tasks.Task.Delay(700);
+            StopFakeTyping();
         }
     }
 }

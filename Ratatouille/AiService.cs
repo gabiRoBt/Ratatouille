@@ -11,22 +11,26 @@ namespace Ratatouille
     {
         private static readonly HttpClient _httpClient = new HttpClient();
 
-        // We now pass the API key directly as a parameter to avoid lifecycle issues
-        public async Task<string> GenerateCodeAsync(string prompt, string apiKey)
+        public async Task<string> GenerateCodeAsync(
+            string prompt,
+            string apiKey,
+            string model = "gemini-2.5-flash-lite",
+            double temperature = 0.1,
+            string systemPrompt = null)
         {
             if (string.IsNullOrWhiteSpace(apiKey))
-            {
-                return "// Error: No API key configured! Please go to Tools -> Options -> Ratatouille AI to add your key.";
-            }
+                return "// Eroare: Nicio cheie API configurata! Mergi la Tools -> Options -> Ratatouille AI.";
 
-            string apiUrl = $"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-lite:generateContent?key={apiKey}";
+            if (string.IsNullOrWhiteSpace(systemPrompt))
+                systemPrompt =
+                    "You are a coding assistant integrated directly into Visual Studio. " +
+                    "Reply ONLY with the exact code requested, no explanations, no Markdown fences.";
+
+            string apiUrl = $"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent?key={apiKey}";
+
             try
             {
-                string fullPrompt = "You are a coding assistant integrated directly into Visual Studio. " +
-                                    "You must reply ONLY with the exact code requested. " +
-                                    "CRITICAL: Do not include any explanations, greetings, or Markdown formatting (like ```csharp). " +
-                                    "I need raw text that can be directly compiled.\n\n" +
-                                    "User request: " + prompt;
+                string fullPrompt = systemPrompt + "\n\nUser request: " + prompt;
 
                 var requestBody = new
                 {
@@ -36,7 +40,7 @@ namespace Ratatouille
                     },
                     generationConfig = new
                     {
-                        temperature = 0.1
+                        temperature = temperature
                     }
                 };
 
@@ -51,13 +55,19 @@ namespace Ratatouille
 
                 string generatedCode = parsedJson["candidates"][0]["content"]["parts"][0]["text"].ToString();
 
-                generatedCode = generatedCode.Replace("```csharp", "").Replace("```", "").Trim();
+                generatedCode = generatedCode
+                    .Replace("```csharp", "")
+                    .Replace("```javascript", "")
+                    .Replace("```python", "")
+                    .Replace("```typescript", "")
+                    .Replace("```", "")
+                    .Trim();
 
                 return generatedCode;
             }
             catch (Exception ex)
             {
-                return $"// Error connecting to Gemini: {ex.Message}";
+                return $"// Eroare la conectarea cu Gemini ({model}): {ex.Message}";
             }
         }
     }
