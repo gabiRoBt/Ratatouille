@@ -1,278 +1,131 @@
-# !\[Ratatouille](Resources/Ratatouille.png)
+<div align="center">
+  <img src="Ratatouille/Resources/Ratatouille.png" width="300" alt="Ratatouille Logo"/>
 
-# 
-
-# > AI-powered code generation for Visual Studio — typed out character by character, as if written by hand.
-
-# 
-
-# !\[Version](https://img.shields.io/badge/version-1.0-blue)
-
-# !\[VS](https://img.shields.io/badge/Visual%20Studio-2022-purple)
-
-# !\[.NET](https://img.shields.io/badge/.NET-4.7.2-green)
-
-# 
-
-# \---
-
-# 
-
-# \## What is it?
-
-# 
-
-# Ratatouille lets you write a plain-English prompt directly in your code file, select it, and press a shortcut. The AI reads your prompt, generates the code, and types it back into the editor — character by character, as if someone is writing it live.
-
-# 
-
-# No side panels. No popups. Just your editor.
-
-# 
-
-# \---
-
-# 
-
-# \## Installation
-
-# 
-
-# 1\. Download the `.vsix` file from the \[Releases](../../releases) page
-
-# 2\. Double-click it to install
-
-# 3\. Restart Visual Studio
-
-# 4\. Go to \*\*Tools → Options → Ratatouille\*\* and enter your Gemini API key
-
-# 
-
-# > You can get a free API key at \[aistudio.google.com](https://aistudio.google.com)
-
-# 
-
-# \---
-
-# 
-
-# \## Usage
-
-# 
-
-# 1\. Type a prompt anywhere in your editor, for example:
-
-# &#x20;  ```
-
-# &#x20;  binary search function in C#
-
-# &#x20;  ```
-
-# 2\. Select the prompt text
-
-# 3\. Press `Ctrl+Alt+Shift+R` → `R`
-
-# 4\. Watch the code appear
-
-# 
-
-# \---
-
-# 
-
-# \## Shortcuts
-
-# 
-
-# All shortcuts start with `Ctrl+Alt+Shift+R`, followed by a second key.
-
-# 
-
-# | Shortcut | Action |
-
-# |---|---|
-
-# | `Ctrl+Alt+Shift+R` → `R` | Generate code from selected prompt |
-
-# | `Ctrl+Alt+Shift+R` → `P` | Pause / Resume fake typing |
-
-# | `Ctrl+Alt+Shift+R` → `S` | Stop fake typing completely |
-
-# | `Ctrl+Alt+Shift+R` → `F` | Finish — paste all remaining code instantly |
-
-# 
-
-# > To reassign any shortcut: \*\*Tools → Options → Environment → Keyboard\*\*, search for `Ratatouille`.
-
-# 
-
-# \---
-
-# 
-
-# \## Status Bar Indicators
-
-# 
-
-# | Symbol | Meaning |
-
-# |---|---|
-
-# | `Ratatouille` | Shortcut pressed, waiting for AI response |
-
-# | `...` | AI is generating (one dot every 0.7s) |
-
-# | `!` | Code received and ready — start typing |
-
-# | `-` | Fake typing is paused |
-
-# | `.` | Stopped or finished |
-
-# 
-
-# \---
-
-# 
-
-# \## Options
-
-# 
-
-# Go to \*\*Tools → Options → Ratatouille\*\* to configure:
-
-# 
-
-# \### 1. API Authentication
-
-# 
-
-# | Option | Description |
-
-# |---|---|
-
-# | \*\*Gemini API Key\*\* | Your secret key from Google AI Studio |
-
-# | \*\*Gemini Model\*\* | Model used for generation (see below) |
-
-# | \*\*Temperature\*\* | Controls creativity: `0.0` = precise, `1.0` = creative |
-
-# 
-
-# \#### Available Models
-
-# 
-
-# | Model | Speed | Free tier | Best for |
-
-# |---|---|---|---|
-
-# | `gemini-2.5-flash-lite` | fastest | 1000 req/day | everyday use ✓ |
-
-# | `gemini-2.5-flash` | fast | 250 req/day | complex prompts |
-
-# | `gemini-2.5-pro` | slower | 50 req/day | hard problems |
-
-# 
-
-# \### 2. Generation
-
-# 
-
-# | Option | Description |
-
-# |---|---|
-
-# | \*\*Custom System Prompt\*\* | Instructions sent to the AI before every request. Controls tone, language, style. Leave empty for default behavior. |
-
-# 
-
-# \*\*Default system prompt:\*\*
-
-# ```
-
-# You are a coding assistant integrated directly into Visual Studio.
-
-# Reply ONLY with the exact code requested, no explanations, no Markdown fences.
-
-# ```
-
-# 
-
-# \### 3. Shortcut
-
-# 
-
-# Read-only field showing the active shortcut. Change it via \*\*Tools → Options → Environment → Keyboard\*\*.
-
-# 
-
-# \---
-
-# 
-
-# \## How it works
-
-# 
-
-# ```
-
-# Select prompt → Ctrl+Alt+Shift+R → R
-
-# &#x20;      ↓
-
-# &#x20; Prompt sent to Gemini API
-
-# &#x20;      ↓
-
-# &#x20; Response received
-
-# &#x20;      ↓
-
-# &#x20; Prompt text deleted from editor
-
-# &#x20;      ↓
-
-# &#x20; Code typed character by character
-
-# &#x20; (each keypress advances one character)
-
-# &#x20;      ↓
-
-# &#x20; 0.7s cooldown after last character
-
-# &#x20; (keys swallowed to prevent accidental input)
-
-# &#x20;      ↓
-
-# &#x20; Done
-
-# ```
-
-# 
-
-# \---
-
-# 
-
-# \## Requirements
-
-# 
-
-# \- Visual Studio 2022 (v17.0 or later)
-
-# \- .NET Framework 4.7.2
-
-# \- A free \[Google AI Studio](https://aistudio.google.com) API key
-
-# 
-
-# \---
-
-# 
-
-# \## Author
-
-# 
-
-# \*\*Gabriel Feraru\*\*
-
+  <p>A Visual Studio extension that generates code from natural language prompts — typed back into the editor character by character, as if written by hand.</p>
+</div>
+
+---
+
+## 🪤 Features
+
+- **Multilingual Prompts:** Write your requests in English, Romanian, Spanish, or any other language.
+- **Human-Like Typing:** Code is typed out realistically, helping you follow the logic as it's written.
+- **Granular Control:** Pause, stop, or instantly complete the typing process at any moment using quick shortcuts.
+- **Powered by Gemini:** Leverage Google's state-of-the-art AI models directly in your IDE.
+
+## 🖱️ Installation
+
+1. Download the latest `.vsix` file from the [Releases](../../releases) page.
+2. Double-click the file to install it, then restart Visual Studio.
+3. Navigate to **Tools → Options → Ratatouille** and enter your Gemini API key.
+
+> **Note:** You can get a free API key at [Google AI Studio](https://aistudio.google.com).
+
+## 🐭 Usage
+
+Type a prompt in your editor, highlight the text, and press `Ctrl+Alt+Shift+R → R`.
+
+**Example:**
+
+Binary search in python
+
+*The prompt will be cleared, and the extension will immediately begin typing out the generated C# code character by character.*
+
+## 🐁 Shortcuts
+
+All Ratatouille actions begin with the chord `Ctrl+Alt+Shift+R`, followed by a specific key.
+
+| Key | Action | Description |
+|-----|--------|-------------|
+| `R` | **Run** | Generate code from the currently selected prompt |
+| `P` | **Pause / Resume** | Temporarily halt or resume the fake typing |
+| `S` | **Stop** | Cancel the current generation process entirely |
+| `F` | **Finish** | Skip the typing animation and paste all remaining code instantly |
+
+> **Pro Tip:** To reassign these shortcuts, go to **Tools → Options → Environment → Keyboard** and search for `Ratatouille`.
+
+## 🐀 Status Bar Indicators
+
+Keep an eye on the Visual Studio status bar to see what Ratatouille is currently doing:
+
+| Symbol | Meaning |
+|--------|---------|
+| `Ratatouille` | Waiting for the AI's response |
+| `...` | Generating (updates with one dot every ~0.7s) |
+| `!` | Code is ready — fake typing is starting |
+| `-` | Generation/Typing is paused |
+| `.` | Process is stopped or successfully finished |
+
+## 🐹 Configuration Options
+
+Customize your experience via **Tools → Options → Ratatouille**:
+
+| Option | Description |
+|--------|-------------|
+| **Gemini API Key** | Your personal key from Google AI Studio. |
+| **Gemini Model** | Choose your balance of speed and limits: <br> `flash-lite` (1000 requests/day) <br> `flash` (250 requests/day) <br> `pro` (50 requests/day) |
+| **Temperature** | `0.0` (Precise & predictable) → `1.0` (Highly creative). |
+| **System Prompt** | Custom instructions sent to the AI before every request (e.g., "Always write comments in English"). |
+
+## 🧀 Requirements
+
+- Visual Studio 2022 (Version 17.0 or higher)
+- .NET Framework 4.7.2
+- Active internet connection
+- [Google AI Studio](https://aistudio.google.com) API key
+
+---
+---
+---
+
+<div align="center">
+<pre>
+    ...     ..      ..          ..                     ....                ..      .     
+  x*8888x.:*8888: -"888:     :**888H: `: .xH""     .xH888888Hx.         x88f` `..x88. .> 
+ X   48888X `8888H  8888    X   `8888k XX888     .H8888888888888:     :8888   xf`*8888%  
+X8x.  8888X  8888X  !888>  '8hx  48888 ?8888     888*"""?""*88888X   :8888f .888  `"`    
+X8888 X8888  88888   "*8%- '8888 '8888 `8888    'f     d8x.   ^%88k  88888' X8888. >"8x  
+'*888!X8888> X8888  xH8>    %888>'8888  8888    '>    <88888X   '?8  88888  ?88888< 888> 
+  `?8 `8888  X888X X888>      "8 '888"  8888     `:..:`888888>    8> 88888   "88888 "8%  
+  -^  '888"  X888  8888>     .-` X*"    8888            `"*88     X  88888 '  `8888>     
+   dx '88~x. !88~  8888>       .xhx.    8888       .xHHhx.."      !  `8888> %  X88!      
+ .8888Xf.888x:!    X888X.:   .H88888h.~`8888.>    X88888888hx. ..!    `888X  `~""`   :   
+:""888":~"888"     `888*"   .~  `%88!` '888*~    !   "*888888888"       "88k.      .~    
+    "~'    "~        ""           `"     ""             ^"***"`           `""*==~~`      
+  
+</pre>
+<pre>
+     ...     ..                         
+  .=*8888x <"?88h.      .xnnx.  .xx.    
+ X>  '8888H> '8888    .f``"888X< `888.  
+'88h. `8888   8888    8L   8888X  8888  
+'8888 '8888    "88>  X88h. `8888  X888k 
+ `888 '8888.xH888x.  '8888 '8888  X8888 
+   X" :88*~  `*8888>  `*88>'8888  X8888 
+ ~"   !"`      "888>    `! X888~  X8888 
+  .H8888h.      ?88    -`  X*"    X8888 
+ :"^"88888h.    '!      xH88hx  . X8888 
+ ^    "88888hx.+"     .*"*88888~  X888X 
+        ^"**""        `    "8%    X888> 
+                         .x..     888f  
+                        88888    :88f   
+                        "88*"  .x8*~    
+
+</pre>
+<pre>
+        ....        .        ..                   ...     ..                  
+   .x88" `^x~  xH(`     :**888H: `: .xH""    .=*8888x <"?88h.         oe    
+  X888   x8 ` 8888h    X   `8888k XX888     X>  '8888H> '8888       .@88    
+ 88888  888.  %8888   '8hx  48888 ?8888    '88h. `8888   8888   ==*88888    
+<8888X X8888   X8?    '8888 '8888 `8888    '8888 '8888    "88>     88888    
+X8888> 488888>"8888x   %888>'8888  8888     `888 '8888.xH888x.     88888    
+X8888>  888888 '8888L    "8 '888"  8888       X" :88*~  `*8888>    88888    
+?8888X   ?8888>'8888X   .-` X*"    8888     ~"   !"`      "888>    88888    
+ 8888X h  8888 '8888~     .xhx.    8888      .H8888h.      ?88     88888    
+  ?888  -:8*"  <888"    .H88888h.~`8888.>   :"^"88888h.    '!      88888    
+   `*88.      :88%     .~  `%88!` '888*~    ^    "88888hx.+"       88888    
+      ^"~====""`             `"     ""             ^"**""       '**%%%%%%** 
+                                                                            
+</pre>
+
+</div>
