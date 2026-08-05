@@ -1,7 +1,7 @@
 <div align="center">
   <img src="Ratatouille/Resources/Ratatouille.png" width="300" alt="Ratatouille Logo"/>
 
-  <p>A Visual Studio extension that generates code from natural language prompts — typed back into the editor character by character, as if written by hand.</p>
+  <p>A Visual Studio extension that generates code from natural language prompts, streamed back into the editor character by character, so you can read the logic as it lands.</p>
 </div>
 
 ---
@@ -9,8 +9,8 @@
 ## 🪤 Features
 
 - **Multilingual Prompts:** Write your requests in English, Romanian, Spanish, or any other language.
-- **Human-Like Typing:** Code is typed out realistically, helping you follow the logic as it's written.
-- **Granular Control:** Pause, stop, or instantly complete the typing process at any moment using quick shortcuts.
+- **Incremental Insertion:** Code is inserted character by character rather than pasted as one block, so you can follow the logic as it appears.
+- **Granular Control:** Pause, stop, or instantly complete the insertion at any moment using quick shortcuts.
 - **Powered by Gemini:** Leverage Google's state-of-the-art AI models directly in your IDE.
 
 ## 🖱️ Installation
@@ -29,7 +29,7 @@ Type a prompt in your editor, highlight the text, and press `Ctrl+Alt+Shift+R �
 
 Binary search in python
 
-*The prompt will be cleared, and the extension will immediately begin typing out the generated C# code character by character.*
+*The prompt will be cleared, and the extension will immediately begin inserting the generated code character by character.*
 
 ## 🐁 Shortcuts
 
@@ -38,9 +38,9 @@ All Ratatouille actions begin with the chord `Ctrl+Alt+Shift+R`, followed by a s
 | Key | Action | Description |
 |-----|--------|-------------|
 | `R` | **Run** | Generate code from the currently selected prompt |
-| `P` | **Pause / Resume** | Temporarily halt or resume the fake typing |
+| `P` | **Pause / Resume** | Temporarily halt or resume the insertion |
 | `S` | **Stop** | Cancel the current generation process entirely |
-| `F` | **Finish** | Skip the typing animation and paste all remaining code instantly |
+| `F` | **Finish** | Skip the animation and insert all remaining code instantly |
 
 > **Pro Tip:** To reassign these shortcuts, go to **Tools → Options → Environment → Keyboard** and search for `Ratatouille`.
 
@@ -52,8 +52,8 @@ Keep an eye on the Visual Studio status bar to see what Ratatouille is currently
 |--------|---------|
 | `Ratatouille` | Waiting for the AI's response |
 | `...` | Generating (updates with one dot every ~0.7s) |
-| `!` | Code is ready — fake typing is starting |
-| `-` | Generation/Typing is paused |
+| `!` | Code is ready, insertion is starting |
+| `-` | Generation/insertion is paused |
 | `.` | Process is stopped or successfully finished |
 
 ## 🐹 Configuration Options
